@@ -1,5 +1,3 @@
-# ecomm
-ecommerce website using MERN
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +23,12 @@ ecommerce website using MERN
                     <th class="px-4 py-2 bg-gray-200">Schedule</th>
                     <th class="px-4 py-2 bg-gray-200">Created On</th>
                     <th class="px-4 py-2 bg-gray-200">Last Updated On</th>
+                    <th class="px-4 py-2 bg-gray-200">Next Execution On</th>
+                    <th class="px-4 py-2 bg-gray-200">Start On</th>
+                    <th class="px-4 py-2 bg-gray-200">Report Metadata</th>
+                    <th class="px-4 py-2 bg-gray-200">Report Params</th>
+                    <th class="px-4 py-2 bg-gray-200">Notification</th>
+                    <th class="px-4 py-2 bg-gray-200">Shared With</th>
                 </tr>
             </thead>
             <tbody id="reportTableBody">
@@ -43,16 +47,22 @@ ecommerce website using MERN
             data.forEach(entry => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td class="border px-4 py-2">${entry.id}</td>
-                    <td class="border px-4 py-2">${entry.customer_id}</td>
-                    <td class="border px-4 py-2">${entry.user_id}</td>
-                    <td class="border px-4 py-2">${entry.name}</td>
-                    <td class="border px-4 py-2">${entry.description}</td>
-                    <td class="border px-4 py-2">${entry.status}</td>
-                    <td class="border px-4 py-2">${entry.type}</td>
-                    <td class="border px-4 py-2">${entry.schedule.display}</td>
-                    <td class="border px-4 py-2">${entry.created_on}</td>
-                    <td class="border px-4 py-2">${entry.last_updated_on}</td>
+                    <td class="border px-4 py-2">${entry.id || ''}</td>
+                    <td class="border px-4 py-2">${entry.customer_id || ''}</td>
+                    <td class="border px-4 py-2">${entry.user_id || ''}</td>
+                    <td class="border px-4 py-2">${entry.name || ''}</td>
+                    <td class="border px-4 py-2">${entry.description || ''}</td>
+                    <td class="border px-4 py-2">${entry.status || ''}</td>
+                    <td class="border px-4 py-2">${entry.type || ''}</td>
+                    <td class="border px-4 py-2">${entry.schedule ? entry.schedule.display || '' : ''}</td>
+                    <td class="border px-4 py-2">${entry.created_on || ''}</td>
+                    <td class="border px-4 py-2">${entry.last_updated_on || ''}</td>
+                    <td class="border px-4 py-2">${entry.next_execution_on || ''}</td>
+                    <td class="border px-4 py-2">${entry.start_on || ''}</td>
+                    <td class="border px-4 py-2">${entry.report_metadata ? JSON.stringify(entry.report_metadata) || '' : ''}</td>
+                    <td class="border px-4 py-2">${entry.report_params ? JSON.stringify(entry.report_params) || '' : ''}</td>
+                    <td class="border px-4 py-2">${entry.notifications ? JSON.stringify(entry.notifications) || '' : ''}</td>
+                    <td class="border px-4 py-2">${entry.shared_with ? JSON.stringify(entry.shared_with) || '' : ''}</td>
                 `;
                 tableBody.appendChild(row);
             });
@@ -63,4 +73,3 @@ ecommerce website using MERN
     </script>
 </body>
 </html>
- 
