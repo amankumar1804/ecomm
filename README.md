@@ -1,75 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CrowdStrike Falcon Reports</title>
-    <!-- Include Astro Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100 p-8">
-    <div class="container mx-auto">
-        <h1 class="text-2xl font-bold mb-4">CrowdStrike Falcon Reports</h1>
-        <table class="table-auto">
-            <thead>
-                <tr>
-                    <th class="px-4 py-2 bg-gray-200">ID</th>
-                    <th class="px-4 py-2 bg-gray-200">Customer ID</th>
-                    <th class="px-4 py-2 bg-gray-200">User ID</th>
-                    <th class="px-4 py-2 bg-gray-200">Name</th>
-                    <th class="px-4 py-2 bg-gray-200">Description</th>
-                    <th class="px-4 py-2 bg-gray-200">Status</th>
-                    <th class="px-4 py-2 bg-gray-200">Type</th>
-                    <th class="px-4 py-2 bg-gray-200">Schedule</th>
-                    <th class="px-4 py-2 bg-gray-200">Created On</th>
-                    <th class="px-4 py-2 bg-gray-200">Last Updated On</th>
-                    <th class="px-4 py-2 bg-gray-200">Next Execution On</th>
-                    <th class="px-4 py-2 bg-gray-200">Start On</th>
-                    <th class="px-4 py-2 bg-gray-200">Report Metadata</th>
-                    <th class="px-4 py-2 bg-gray-200">Report Params</th>
-                    <th class="px-4 py-2 bg-gray-200">Notification</th>
-                    <th class="px-4 py-2 bg-gray-200">Shared With</th>
-                </tr>
-            </thead>
-            <tbody id="reportTableBody">
-                <!-- Table rows will be added dynamically here -->
-            </tbody>
-        </table>
-    </div>
+---
+import { getJSON } from 'fs'
 
-    <script>
-        // Function to fetch data from JSON file and create table rows
-        async function fetchDataAndCreateTable() {
-            const response = await fetch('data/crowdstrikefalcon.json');
-            const data = await response.json();
+const data = getJSON('../data/crowdstrikedetection.json')
+---
 
-            const tableBody = document.getElementById('reportTableBody');
-            data.forEach(entry => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td class="border px-4 py-2">${entry.id || ''}</td>
-                    <td class="border px-4 py-2">${entry.customer_id || ''}</td>
-                    <td class="border px-4 py-2">${entry.user_id || ''}</td>
-                    <td class="border px-4 py-2">${entry.name || ''}</td>
-                    <td class="border px-4 py-2">${entry.description || ''}</td>
-                    <td class="border px-4 py-2">${entry.status || ''}</td>
-                    <td class="border px-4 py-2">${entry.type || ''}</td>
-                    <td class="border px-4 py-2">${entry.schedule ? entry.schedule.display || '' : ''}</td>
-                    <td class="border px-4 py-2">${entry.created_on || ''}</td>
-                    <td class="border px-4 py-2">${entry.last_updated_on || ''}</td>
-                    <td class="border px-4 py-2">${entry.next_execution_on || ''}</td>
-                    <td class="border px-4 py-2">${entry.start_on || ''}</td>
-                    <td class="border px-4 py-2">${entry.report_metadata ? JSON.stringify(entry.report_metadata) || '' : ''}</td>
-                    <td class="border px-4 py-2">${entry.report_params ? JSON.stringify(entry.report_params) || '' : ''}</td>
-                    <td class="border px-4 py-2">${entry.notifications ? JSON.stringify(entry.notifications) || '' : ''}</td>
-                    <td class="border px-4 py-2">${entry.shared_with ? JSON.stringify(entry.shared_with) || '' : ''}</td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
-
-        // Call the function to fetch data and create table rows
-        fetchDataAndCreateTable();
-    </script>
-</body>
-</html>
+<div class="overflow-x-auto">
+  <table class="table-auto min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Field</th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <!-- Iterate over each record in the data -->
+      {data.map(record => (
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">ID</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{record.id}</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Customer ID</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{record.customer_id}</td>
+        </tr>
+        <!-- Add more fields here as needed -->
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Notifications Type</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            <!-- Iterate over each notification type -->
+            {record.notifications.map(notification => (
+              <div>{notification.type}</div>
+            ))}
+          </td>
+        </tr>
+        <!-- Add more fields with multiple records here as needed -->
+      ))}
+    </tbody>
+  </table>
+</div>
