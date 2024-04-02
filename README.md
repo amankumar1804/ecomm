@@ -581,6 +581,13 @@ const data = getJSON('../data/crowdstrikedetection.json')
         <h1 class="text-3xl font-bold mb-8 text-center">CrowdStrike Falcon Report</h1>
         <div class="overflow-x-auto">
             <table class="table-auto border-collapse border border-gray-300 bg-white shadow-md rounded-lg">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <!-- Table headers -->
+                        <th class="px-4 py-2 text-left">Field</th>
+                        <th class="px-4 py-2 text-left">Value</th>
+                    </tr>
+                </thead>
                 <tbody id="reportTableBody">
                     <!-- Table rows will be added dynamically here -->
                 </tbody>
@@ -660,15 +667,29 @@ const data = getJSON('../data/crowdstrikedetection.json')
         // Function to create table rows from JSON data
         function createTableRows() {
             const tableBody = document.getElementById('reportTableBody');
-            let keys = Object.keys(jsonData);
-            keys.forEach(key => {
-                const keyRow = document.createElement('tr');
-                const valueRow = document.createElement('tr');
-                keyRow.innerHTML = `<td class="px-4 py-2 font-bold border border-gray-300">${key}</td>`;
-                valueRow.innerHTML = `<td class="px-4 py-2 border border-gray-300">${jsonData[key]}</td>`;
-                tableBody.appendChild(keyRow);
-                tableBody.appendChild(valueRow);
-            });
+
+            // Create table headers
+            const headerRow = document.createElement('tr');
+            headerRow.classList.add('bg-gray-200');
+            headerRow.innerHTML = `
+                <th class="px-4 py-2 text-left">Field</th>
+                <th class="px-4 py-2 text-left">Value</th>
+            `;
+            tableBody.appendChild(headerRow);
+
+            // Create table row with key-value pairs
+            const dataRow = document.createElement('tr');
+            for (const [key, value] of Object.entries(jsonData)) {
+                const keyCell = document.createElement('td');
+                const valueCell = document.createElement('td');
+                keyCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
+                valueCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
+                keyCell.textContent = key;
+                valueCell.textContent = typeof value === 'object' ? JSON.stringify(value) : value;
+                dataRow.appendChild(keyCell);
+                dataRow.appendChild(valueCell);
+            }
+            tableBody.appendChild(dataRow);
         }
 
         // Call the function to create table rows
