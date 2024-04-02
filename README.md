@@ -324,6 +324,126 @@ const data = getJSON('../data/crowdstrikedetection.json')
 </body>
 </html>
 
+-=-=-=-=-[][]-=-[][][-=-[][
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrowdStrike Falcon Report</title>
+    <!-- Include Astro Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="container mx-auto">
+        <h1 class="text-2xl font-bold mb-4">CrowdStrike Falcon Report</h1>
+        <table class="table-auto">
+            <thead>
+                <tr id="headerRow"></tr>
+            </thead>
+            <tbody id="reportTableBody">
+                <!-- Table rows will be added dynamically here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Define JSON data as a JavaScript object
+        const jsonData = {
+            "id": "573568b0dcee4fe3b747ccdfb9a26a84",
+            "customer_id": "9dab3dd4a8de4e46bc8988b5a8c88603",
+            "user_uuid": "6ff6787c-6f9a-4bf2-a229-6a553a0d009d",
+            "user_id": "sowrab.m@lseg.com",
+            "name": "WBMS CrowdStrike Sensor Report",
+            "description": "This report is for Org-WBMS",
+            "status": "ACTIVE",
+            "type": "hosts",
+            "schedule": {
+                "definition": "0 12 * * 4",
+                "display": "Weekly on Thursday at 12 PM (noon) UTC",
+                "can_stagger": false
+            },
+            "created_on": "2024-01-23T17:16:46.45037667Z",
+            "last_updated_on": "2024-02-29T12:00:44.0212124092",
+            "last_execution": {
+                "id": "060b3ce9d35245eea046f8138f386457",
+                "last_updated_on": "2024-02-29T12:00:44.021212409Z",
+                "execution_metadata": null,
+                "status": "DONE",
+                "status_display": "Success",
+                "status_msg": ""
+            },
+            "next_execution_on": "2024-03-07T12:00:00Z",
+            "start_on": "2024-01-24T00:00:007",
+            "report_metadata": {
+                "subtype": "",
+                "last_unscheduled_execution": {
+                    "id": "",
+                    "activity_status": "",
+                    "status_display": "",
+                    "last_updated_ts": null
+                },
+                "created_by_uuid": "",
+                "created_by_user_id": ""
+            },
+            "report_params": {
+                "filter": "tags: 'SensorGroupingTags/Org-WBMS'",
+                "filter_display": "tags: ' SensorGroupingTags/Org-WBMS'",
+                "filter_ui": "tags: 'SensorGroupingTags/Org-WBMS'",
+                "format": "csv",
+                "sort": "",
+                "dashboard_id": "",
+                "dashboard_visibility": ""
+            },
+            "notifications": [
+                {
+                    "type": "email",
+                    "config": {
+                        "recipients": ["sowrab.m@lseg.com", "sarah.metcalfe@lseg.com"],
+                        "plugin_id": "",
+                        "config_id": "",
+                        "cid": "",
+                        "severity": ""
+                    },
+                    "options": {
+                        "attach_report": "true"
+                    }
+                }
+            ],
+            "shared_with": [
+                "74d9565d-30e2-46e6-9480-ed14ac271727",
+                "6ff6787c-6f9a-4bf2-a229-6a553a0d009d"
+            ]
+        };
+
+        // Function to create table rows from JSON data
+        function createTableRows() {
+            const tableBody = document.getElementById('reportTableBody');
+            const headerRow = document.getElementById('headerRow');
+
+            // Create table headers
+            for (const key in jsonData) {
+                const th = document.createElement('th');
+                th.textContent = key;
+                headerRow.appendChild(th);
+            }
+
+            // Create table row with values
+            const row = document.createElement('tr');
+            for (const key in jsonData) {
+                const td = document.createElement('td');
+                td.textContent = typeof jsonData[key] === 'object' ? JSON.stringify(jsonData[key]) : jsonData[key];
+                row.appendChild(td);
+            }
+            tableBody.appendChild(row);
+        }
+
+        // Call the function to create table rows
+        createTableRows();
+    </script>
+</body>
+</html>
 
 
 
