@@ -67,3 +67,42 @@ const data = getJSON('../data/crowdstrikedetection.json')
   const jsonData = JSON;
 </script>
 
+
+<table class="table-auto w-full text-left table-striped border-collapse border border-gray-400">
+  <thead>
+    <tr class="bg-gray-500 text-gray-100">
+      <th class="px-4 py-2">Field</th>
+      <th class="px-4 py-2">Value</th>
+    </tr>
+  </thead>
+  <tbody id="table-body">
+  </tbody>
+</table>
+
+<script context="module">
+  import jsonData from '../path/to/your/data.json'; // Replace with path to your JSON file
+</script>
+
+<script>
+  // Iterate over jsonData and populate the table
+  const tableBody = document.getElementById('table-body');
+  jsonData.forEach(item => {
+    const row = document.createElement('tr');
+    row.classList.add('hover:bg-gray-100');
+
+    const fieldCell = document.createElement('td');
+    fieldCell.classList.add('px-4', 'py-2', 'border', 'border-gray-400');
+    fieldCell.textContent = item.key;
+
+    const valueCell = document.createElement('td');
+    valueCell.classList.add('px-4', 'py-2', 'border', 'border-gray-400');
+    valueCell.textContent = item.value;
+
+    row.appendChild(fieldCell);
+    row.appendChild(valueCell);
+
+    tableBody.appendChild(row);
+  });
+</script>
+
+
