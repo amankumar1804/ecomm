@@ -660,29 +660,23 @@ const data = getJSON('../data/crowdstrikedetection.json')
         // Function to create table rows from JSON data
         function createTableRows() {
             const tableBody = document.getElementById('reportTableBody');
-            for (const [key, value] of Object.entries(jsonData)) {
-                const row = document.createElement('tr');
-                const keyCell = document.createElement('td');
-                const valueCell = document.createElement('td');
-                keyCell.classList.add('px-4', 'py-2', 'font-bold', 'border', 'border-gray-300', 'text-left');
-                valueCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
-                keyCell.textContent = key;
-                valueCell.textContent = typeof value === 'object' ? JSON.stringify(value) : value;
-                row.appendChild(keyCell);
-                tableBody.appendChild(row);
-                const row2 = document.createElement('tr');
-                row2.appendChild(valueCell);
-                tableBody.appendChild(row2);
-            }
+            let keys = Object.keys(jsonData);
+            keys.forEach(key => {
+                const keyRow = document.createElement('tr');
+                const valueRow = document.createElement('tr');
+                keyRow.innerHTML = `<td class="px-4 py-2 font-bold border border-gray-300">${key}</td>`;
+                valueRow.innerHTML = `<td class="px-4 py-2 border border-gray-300">${jsonData[key]}</td>`;
+                tableBody.appendChild(keyRow);
+                tableBody.appendChild(valueRow);
+            });
         }
 
         // Call the function to create table rows
         createTableRows();
-   
-
     </script>
 </body>
 </html>
+
 
 
 
