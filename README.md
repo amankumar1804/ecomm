@@ -104,5 +104,57 @@ const data = getJSON('../data/crowdstrikedetection.json')
     tableBody.appendChild(row);
   });
 </script>
+--------------------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrowdStrike Falcon Reports</title>
+    <!-- Include Astro Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="container mx-auto">
+        <h1 class="text-2xl font-bold mb-4">CrowdStrike Falcon Reports</h1>
+        <table class="table-auto">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2 bg-gray-200">ID</th>
+                    <th class="px-4 py-2 bg-gray-200">Customer ID</th>
+                </tr>
+            </thead>
+            <tbody id="reportTableBody">
+                <!-- Table rows will be added dynamically here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Function to fetch data from JSON file and create table rows
+        async function fetchDataAndCreateTable() {
+            const response = await fetch('data/crowdstrikefalcon.json');
+            const data = await response.json();
+
+            const tableBody = document.getElementById('reportTableBody');
+            data.forEach(entry => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="border px-4 py-2">${entry.id || ''}</td>
+                    <td class="border px-4 py-2">${entry.customer_id || ''}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Call the function to fetch data and create table rows
+        fetchDataAndCreateTable();
+    </script>
+</body>
+</html>
+
+
+
 
 
