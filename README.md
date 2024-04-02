@@ -112,3 +112,28 @@ const data = getJSON('../data/crowdstrikedetection.json')
         "6ff6787c-6f9a-4bf2--6a553a0d009d"
     ]
 }
+
+
+<table class="table-auto w-full text-left table-striped border-collapse border border-gray-400">
+  <thead>
+    <tr class="bg-gray-500 text-gray-100">
+      <th class="px-4 py-2">Field</th>
+      <th class="px-4 py-2">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    {each reportData in jsonData}
+      <tr class="hover:bg-gray-100">
+        <td class="px-4 py-2 border border-gray-400">{{ reportData.key }}</td>
+        <td class="px-4 py-2 border border-gray-400">{{ reportData.value }}</td>
+      </tr>
+    {/each}
+  </tbody>
+</table>
+
+<script>
+  import { JSON } from '../path/to/your/data.json'; // Replace with path to your JSON file
+
+  const jsonData = JSON;
+</script>
+
