@@ -1592,3 +1592,28 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
 </html>
 
 
+-=-=-=-=++++-=-=-=-=-=-=
+    function createTableRows() {
+        const tableBody = document.getElementById('reportTableBody');
+
+        // Create table row for keys and values
+        for (const key in jsonData) {
+            const keyCell = document.createElement('td');
+            const valueCell = document.createElement('td');
+            keyCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
+            valueCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
+            keyCell.textContent = key;
+            const value = typeof jsonData[key] === 'object' ? JSON.stringify(jsonData[key]) : jsonData[key];
+            valueCell.textContent = value;
+            const row = document.createElement('tr');
+            row.appendChild(keyCell);
+            row.appendChild(valueCell);
+            tableBody.appendChild(row);
+        }
+    }
+
+    // Call the function to create table rows
+    createTableRows();
+</script>
+
+
