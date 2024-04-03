@@ -939,6 +939,39 @@ const data = getJSON('../data/crowdstrikedetection.json')
 </body>
 </html>
 
+function createTableHeaders() {
+      const keysRow = document.getElementById('reportKeysRow');
+
+      for (const key in jsonData) {
+        const keyCell = document.createElement('th');
+        keyCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
+        keyCell.textContent = key;
+        keysRow.appendChild(keyCell);
+      }
+    }
+
+    // Function to create table rows with values
+    function createTableRows() {
+      const tableBody = document.getElementById('reportTableBody');
+      const valuesRow = document.createElement('tr');
+
+      for (const key in jsonData) {
+        const valueCell = document.createElement('td');
+        valueCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
+        const value = typeof jsonData[key] === 'object' ? JSON.stringify(jsonData[key]) : jsonData[key];
+        valueCell.textContent = value;
+        valuesRow.appendChild(valueCell);
+      }
+
+      tableBody.appendChild(valuesRow);
+    }
+
+    // Call the functions to create headers and rows
+    createTableHeaders();
+    createTableRows();
+
+
+
 
 
 
