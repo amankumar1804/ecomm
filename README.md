@@ -1452,6 +1452,8 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
 
 
 -=-=-=-=--=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1545,59 +1547,37 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
         // Function to create table rows from JSON data
         function createTableRows() {
             const tableBody = document.getElementById('reportTableBody');
-
-            // Create table rows for each key-value pair
-            for (const [key, value] of Object.entries(jsonData)) {
-                const keyCell = document.createElement('td');
-                keyCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
-                keyCell.textContent = key;
-
-                const valueCell = document.createElement('td');
-                valueCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
-                valueCell.textContent = typeof value === 'object' ? '' : value;
-
-                const buttonCell = document.createElement('td');
-                buttonCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
-                if (typeof value === 'object') {
-                    const button = document.createElement('button');
-                    button.textContent = 'Toggle';
-                    button.classList.add('bg-blue-500', 'hover:bg-blue-700', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded');
-                    button.addEventListener('click', () => toggleVisibility(key));
-                    buttonCell.appendChild(button);
-                }
-
+            
+            // Loop through JSON data
+            for (const key in jsonData) {
+                // Create table row
                 const row = document.createElement('tr');
+                
+                // Create table cells for key and toggle button
+                const keyCell = document.createElement('td');
+                keyCell.textContent = key;
                 row.appendChild(keyCell);
+                
+                const toggleCell = document.createElement('td');
+                const toggleButton = document.createElement('button');
+                toggleButton.textContent = 'Toggle';
+                toggleButton.classList.add('bg-blue-500', 'hover:bg-blue-700', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded');
+                toggleButton.onclick = function() {
+                    const valueCell = this.parentNode.nextSibling;
+                    valueCell.classList.toggle('hidden');
+                };
+                toggleCell.appendChild(toggleButton);
+                row.appendChild(toggleCell);
+                
+                // Create table cell for value
+                const valueCell = document.createElement('td');
+                valueCell.textContent = typeof jsonData[key] === 'object' ? JSON.stringify(jsonData[key]) : jsonData[key];
+                valueCell.classList.add('hidden', 'px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
                 row.appendChild(valueCell);
-                row.appendChild(buttonCell);
-
+                
+                // Append row to table body
                 tableBody.appendChild(row);
             }
-        }
-
-        // Toggle visibility of section data
-        function toggleVisibility(section) {
-            const sectionData = jsonData[section];
-            const sectionRowIndex = Object.keys(jsonData).indexOf(section) + 1;
-            const container = document.getElementById('reportTableBody').rows[sectionRowIndex];
-
-            // Clear container
-            while (container.lastChild) {
-                container.removeChild(container.lastChild);
-            }
-
-            // Add button again
-            const buttonCell = document.createElement('td');
-            buttonCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
-            const button = document.createElement('button');
-            button.textContent = 'Toggle';
-            button.classList.add('bg-blue-500', 'hover:bg-blue-700', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded');
-            button.addEventListener('click', () => toggleVisibility(section));
-            buttonCell.appendChild(button);
-            container.appendChild(buttonCell);
-
-            // Toggle visibility
-            container.style.display = container.style.display === 'none' ? 'table-row' : 'none';
         }
 
         // Call the function to create table rows
@@ -1605,6 +1585,7 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
     </script>
 </body>
 </html>
+
 
 
 
