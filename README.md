@@ -1453,7 +1453,6 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
 
 -=-=-=-=--=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1548,36 +1547,42 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
         function createTableRows() {
             const tableBody = document.getElementById('reportTableBody');
             
-            // Loop through JSON data
+            // Create table row with keys
+            const keysRow = document.createElement('tr');
             for (const key in jsonData) {
-                // Create table row
-                const row = document.createElement('tr');
-                
-                // Create table cells for key and toggle button
                 const keyCell = document.createElement('td');
+                keyCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
                 keyCell.textContent = key;
-                row.appendChild(keyCell);
-                
-                const toggleCell = document.createElement('td');
-                const toggleButton = document.createElement('button');
-                toggleButton.textContent = 'Toggle';
-                toggleButton.classList.add('bg-blue-500', 'hover:bg-blue-700', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded');
-                toggleButton.onclick = function() {
-                    const valueCell = this.parentNode.nextSibling;
-                    valueCell.classList.toggle('hidden');
-                };
-                toggleCell.appendChild(toggleButton);
-                row.appendChild(toggleCell);
-                
-                // Create table cell for value
-                const valueCell = document.createElement('td');
-                valueCell.textContent = typeof jsonData[key] === 'object' ? JSON.stringify(jsonData[key]) : jsonData[key];
-                valueCell.classList.add('hidden', 'px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
-                row.appendChild(valueCell);
-                
-                // Append row to table body
-                tableBody.appendChild(row);
+                keysRow.appendChild(keyCell);
             }
+            tableBody.appendChild(keysRow);
+            
+            // Create table row with toggle buttons
+            const toggleRow = document.createElement('tr');
+            for (const key in jsonData) {
+                const toggleCell = document.createElement('td');
+                toggleCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
+                if (typeof jsonData[key] === 'object') {
+                    const toggleButton = document.createElement('button');
+                    toggleButton.textContent = "Toggle";
+                    toggleButton.classList.add('bg-blue-500', 'hover:bg-blue-700', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded');
+                    toggleButton.onclick = function() {
+                        toggleJson(key);
+                    };
+                    toggleCell.appendChild(toggleButton);
+                } else {
+                    toggleCell.textContent = "N/A";
+                }
+                toggleRow.appendChild(toggleCell);
+            }
+            tableBody.appendChild(toggleRow);
+        }
+
+        // Toggle JSON value display
+        function toggleJson(key) {
+            const value = jsonData[key];
+            const displayValue = typeof value === 'object' ? JSON.stringify(value, null, 2) : value;
+            alert(displayValue);
         }
 
         // Call the function to create table rows
@@ -1585,7 +1590,5 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
     </script>
 </body>
 </html>
-
-
 
 
