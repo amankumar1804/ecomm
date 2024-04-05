@@ -1616,57 +1616,135 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
     createTableRows();
 </script>
 
-<style>
-        /* Modal styles */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-
-        /* Modal content */
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto; /* 15% from the top and centered */
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
-        }
-
-        /* Close button */
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrowdStrike Falcon Report</title>
+    <!-- Include Astro Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .json-container {
+            display: none;
         }
     </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-center">CrowdStrike Falcon Report</h1>
+        <div class="overflow-x-auto">
+            <table class="table-auto border-collapse border border-gray-300 bg-white shadow-md rounded-lg">
+                <tbody id="reportTableBody">
+                    <!-- Table rows will be added dynamically here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    function toggleJsonModal() {
-        const modal = document.getElementById('jsonModal');
-        const modalContent = document.getElementById('jsonContent');
-        modalContent.textContent = JSON.stringify(jsonData, null, 2);
-        modal.style.display = 'block';
-    }
+    <script>
+        // Define JSON data as a JavaScript object
+        const jsonData = {
+            "id": "573568b0dcee4fe3b747ccdfb9a26a84",
+            "customer_id": "9dab3dd4a8de4e46bc8988b5a8c88603",
+            "user_uuid": "6ff6787c-6f9a-4bf2-a229-6a553a0d009d",
+            "user_id": "sowrab.m@lseg.com",
+            "name": "WBMS CrowdStrike Sensor Report",
+            "description": "This report is for Org-WBMS",
+            "status": "ACTIVE",
+            "type": "hosts",
+            "schedule": {
+                "definition": "0 12 * * 4",
+                "display": "Weekly on Thursday at 12 PM (noon) UTC",
+                "can_stagger": false
+            },
+            "created_on": "2024-01-23T17:16:46.45037667Z",
+            "last_updated_on": "2024-02-29T12:00:44.0212124092",
+            "last_execution": {
+                "id": "060b3ce9d35245eea046f8138f386457",
+                "last_updated_on": "2024-02-29T12:00:44.021212409Z",
+                "execution_metadata": null,
+                "status": "DONE",
+                "status_display": "Success",
+                "status_msg": ""
+            },
+            "next_execution_on": "2024-03-07T12:00:00Z",
+            "start_on": "2024-01-24T00:00:007",
+            "report_metadata": {
+                "subtype": "",
+                "last_unscheduled_execution": {
+                    "id": "",
+                    "activity_status": "",
+                    "status_display": "",
+                    "last_updated_ts": null
+                },
+                "created_by_uuid": "",
+                "created_by_user_id": ""
+            },
+            "report_params": {
+                "filter": "tags: 'SensorGroupingTags/Org-WBMS'",
+                "filter_display": "tags: ' SensorGroupingTags/Org-WBMS'",
+                "filter_ui": "tags: 'SensorGroupingTags/Org-WBMS'",
+                "format": "csv",
+                "sort": "",
+                "dashboard_id": "",
+                "dashboard_visibility": ""
+            },
+            "notifications": [
+                {
+                    "type": "email",
+                    "config": {
+                        "recipients": ["sowrab.m@lseg.com", "sarah.metcalfe@lseg.com"],
+                        "plugin_id": "",
+                        "config_id": "",
+                        "cid": "",
+                        "severity": ""
+                    },
+                    "options": {
+                        "attach_report": "true"
+                    }
+                }
+            ],
+            "shared_with": [
+                "74d9565d-30e2-46e6-9480-ed14ac271727",
+                "6ff6787c-6f9a-4bf2-a229-6a553a0d009d"
+            ]
+        };
 
-    // Function to close JSON modal
-    function closeJsonModal() {
-        const modal = document.getElementById('jsonModal');
-        modal.style.display = 'none';
-    }
+        // Function to create table rows from JSON data
+        function createTableRows() {
+            const tableBody = document.getElementById('reportTableBody');
+            
+            // Create table rows for keys and toggle buttons
+            for (const key in jsonData) {
+                const keyRow = document.createElement('tr');
+                keyRow.innerHTML = `
+                    <td class="px-4 py-2 border border-gray-300 text-left">${key}</td>
+                    <td class="px-4 py-2 border border-gray-300 text-left">
+                        <button class="toggle-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="toggleJson('${key}')">Toggle</button>
+                    </td>
+                `;
+                tableBody.appendChild(keyRow);
+                
+                const valueRow = document.createElement('tr');
+                valueRow.classList.add('json-container');
+                valueRow.innerHTML = `
+                    <td class="px-4 py-2 border border-gray-300 text-left" colspan="2">
+                        <pre>${typeof jsonData[key] === 'object' ? JSON.stringify(jsonData[key], null, 2) : jsonData[key]}</pre>
+                    </td>
+                `;
+                tableBody.appendChild(valueRow);
+            }
+        }
 
+        // Call the function to create table rows
+        createTableRows();
 
+        // Function to toggle display of JSON value
+        function toggleJson(key) {
+            const container = document.querySelector(`tr.json-container:nth-child(${Object.keys(jsonData).indexOf(key) + 2})`);
+            container.style.display = container.style.display === 'none' ? 'table-row' : 'none';
+        }
+    </script>
+</body>
+</html>
