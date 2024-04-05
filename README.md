@@ -1616,3 +1616,113 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
     createTableRows();
 </script>
 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrowdStrike Falcon Report</title>
+    <!-- Include Astro Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-center">CrowdStrike Falcon Report</h1>
+        <div class="overflow-x-auto">
+            <table class="table-auto border-collapse border border-gray-300 bg-white shadow-md rounded-lg">
+                <tbody id="reportTableBody">
+                    <!-- Table rows will be added dynamically here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modal" class="hidden fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg max-w-md">
+            <button id="modalCloseBtn" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">&times;</button>
+            <h2 class="text-lg font-semibold mb-4">Key-Value Pairs</h2>
+            <pre id="modalContent" class="overflow-auto max-h-96"></pre>
+        </div>
+    </div>
+
+    <script>
+        // Define JSON data as a JavaScript object
+        const jsonData = {
+            "id": "573568b0dcee4fe3b747ccdfb9a26a84",
+            "customer_id": "9dab3dd4a8de4e46bc8988b5a8c88603",
+            "user_uuid": "6ff6787c-6f9a-4bf2-a229-6a553a0d009d",
+            "user_id": "sowrab.m@lseg.com",
+            "name": "WBMS CrowdStrike Sensor Report",
+            "description": "This report is for Org-WBMS",
+            "status": "ACTIVE",
+            "type": "hosts",
+            "created_on": "2024-01-23T17:16:46.45037667Z",
+            "last_updated_on": "2024-02-29T12:00:44.0212124092",
+            "next_execution_on": "2024-03-07T12:00:00Z",
+            "start_on": "2024-01-24T00:00:007",
+            "report_metadata": {
+                "subtype": "",
+                "last_unscheduled_execution": {
+                    "id": "",
+                    "activity_status": "",
+                    "status_display": "",
+                    "last_updated_ts": null
+                },
+                "created_by_uuid": "",
+                "created_by_user_id": ""
+            },
+            "report_params": {
+                "filter": "tags: 'SensorGroupingTags/Org-WBMS'",
+                "filter_display": "tags: ' SensorGroupingTags/Org-WBMS'",
+                "filter_ui": "tags: 'SensorGroupingTags/Org-WBMS'",
+                "format": "csv",
+                "sort": "",
+                "dashboard_id": "",
+                "dashboard_visibility": ""
+            }
+        };
+
+        // Function to create table rows from JSON data
+        function createTableRows() {
+            const tableBody = document.getElementById('reportTableBody');
+
+            // Create table rows with keys and toggle buttons
+            for (const key in jsonData) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-4 py-2 border border-gray-300 text-left">${key}</td>
+                    <td class="px-4 py-2 border border-gray-300 text-left">
+                        <button class="toggleBtn bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline">Toggle</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            }
+
+            // Add click event listeners to toggle buttons
+            const toggleBtns = document.querySelectorAll('.toggleBtn');
+            toggleBtns.forEach(btn => {
+                btn.addEventListener('click', toggleJson);
+            });
+        }
+
+        // Function to toggle JSON value display
+        function toggleJson(event) {
+            const key = event.target.closest('tr').querySelector('td:first-child').textContent;
+            const value = jsonData[key];
+            const modalContent = document.getElementById('modalContent');
+            modalContent.textContent = JSON.stringify(value, null, 2);
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        // Close modal when close button is clicked
+        document.getElementById('modalCloseBtn').addEventListener('click', () => {
+            document.getElementById('modal').classList.add('hidden');
+        });
+
+        // Call the function to create table rows
+        createTableRows();
+    </script>
+</body>
+</html>
