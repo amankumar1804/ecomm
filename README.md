@@ -1616,4 +1616,57 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
     createTableRows();
 </script>
 
+<style>
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        /* Close button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+
+    function toggleJsonModal() {
+        const modal = document.getElementById('jsonModal');
+        const modalContent = document.getElementById('jsonContent');
+        modalContent.textContent = JSON.stringify(jsonData, null, 2);
+        modal.style.display = 'block';
+    }
+
+    // Function to close JSON modal
+    function closeJsonModal() {
+        const modal = document.getElementById('jsonModal');
+        modal.style.display = 'none';
+    }
+
 
