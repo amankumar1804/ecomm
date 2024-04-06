@@ -1948,3 +1948,214 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
 #collapseButton:hover {
     background-color: darkblue; /* Darker blue on hover for visual feedback */
 }
+
+
+
+
+-=-=best code-=-=-=-=
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrowdStrike Falcon Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .collapsible {
+            background-color: #777;
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            margin-left: 10px; /* Add some space between the key name and button */
+        }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+        .collapsible:after {
+            content: '\002B';
+            color: white;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2212";
+        }
+
+        .content {
+            padding: 18px;
+            display: none; /* Initially hide content */
+            background-color: #f1f1f1;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+
+        .nested-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .nested-table, .nested-table th, .nested-table td {
+            border: 1px solid #ddd;
+        }
+
+        .nested-table th, .nested-table td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .nested-table th {
+            background-color: #f3f3f3;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-center">CrowdStrike Falcon Report</h1>
+        <div class="overflow-x-auto">
+            <table class="table-auto border-collapse border border-gray-300 bg-white shadow-md rounded-lg">
+                <tbody id="reportTableBody">
+                    <!-- Table rows will be added dynamically here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const jsonData = {
+            "id": "573568b0dcee4fe3b747ccdfb9a26a84",
+            "customer_id": "9dab3dd4a8de4e46bc8988b5a8c88603",
+            "user_uuid": "6ff6787c-6f9a-4bf2-a229-6a553a0d009d",
+            "user_id": "sowrab.m@lseg.com",
+            "name": "WBMS CrowdStrike Sensor Report",
+            "description": "This report is for Org-WBMS",
+            "status": "ACTIVE",
+            "type": "hosts",
+            "schedule": {
+                "definition": "0 12 * * 4",
+                "display": "Weekly on Thursday at 12 PM (noon) UTC",
+                "can_stagger": false
+            },
+            "created_on": "2024-01-23T17:16:46.45037667Z",
+            "last_updated_on": "2024-02-29T12:00:44.0212124092",
+            "last_execution": {
+                "id": "060b3ce9d35245eea046f8138f386457",
+                "last_updated_on": "2024-02-29T12:00:44.021212409Z",
+                "execution_metadata": null,
+                "status": "DONE",
+                "status_display": "Success",
+                "status_msg": ""
+            },
+            "next_execution_on": "2024-03-07T12:00:00Z",
+            "start_on": "2024-01-24T00:00:007",
+            "report_metadata": {
+                "subtype": "",
+                "last_unscheduled_execution": {
+                    "id": "",
+                    "activity_status": "",
+                    "status_display": "",
+                    "last_updated_ts": null
+                },
+                "created_by_uuid": "",
+                "created_by_user_id": ""
+            },
+            "report_params": {
+                "filter": "tags: 'SensorGroupingTags/Org-WBMS'",
+                "filter_display": "tags: ' SensorGroupingTags/Org-WBMS'",
+                "filter_ui": "tags: 'SensorGroupingTags/Org-WBMS'",
+                "format": "csv",
+                "sort": "",
+                "dashboard_id": "",
+                "dashboard_visibility": ""
+            },
+            "notifications": [
+                {
+                    "type": "email",
+                    "config": {
+                        "recipients": ["sowrab.m@lseg.com", "sarah.metcalfe@lseg.com"],
+                        "plugin_id": "",
+                        "config_id": "",
+                        "cid": "",
+                        "severity": ""
+                    },
+                    "options": {
+                        "attach_report": "true"
+                    }
+                }
+            ],
+            "shared_with": [
+                "74d9565d-30e2-46e6-9480-ed14ac271727",
+                "6ff6787c-6f9a-4bf2-a229-6a553a0d009d"
+            ]
+        };
+
+
+        function createNestedTable(data) {
+            const table = document.createElement('table');
+            table.className = 'nested-table';
+            
+            for (const key in data) {
+                const row = table.insertRow(-1);
+                const cellKey = row.insertCell(0);
+                const cellValue = row.insertCell(1);
+                cellKey.textContent = key;
+                
+                // Check if the value is an object and stringify if necessary
+                cellValue.textContent = typeof data[key] === 'object' ? JSON.stringify(data[key], null, 2) : data[key];
+            }
+            return table;
+        }
+
+        function createTableRows() {
+            const tableBody = document.getElementById('reportTableBody');
+            const collapsibleKeys = ['schedule', 'last_execution', 'report_metadata', 'report_params', 'notifications', 'shared_with'];
+
+            for (const key in jsonData) {
+                const row = document.createElement('tr');
+                const cell = document.createElement('td');
+                cell.classList.add('border', 'border-gray-300', 'px-4', 'py-2', 'text-left', 'w-full');
+                row.appendChild(cell);
+
+                if (collapsibleKeys.includes(key)) {
+                    const keySpan = document.createElement('span');
+                    keySpan.textContent = key + ": ";
+                    cell.appendChild(keySpan);
+
+                    const button = document.createElement('button');
+                    button.textContent = "Toggle";
+                    button.classList.add('collapsible');
+                    cell.appendChild(button);
+                    
+                    const contentDiv = document.createElement('div');
+                    contentDiv.classList.add('content');
+                    const nestedTable = createNestedTable(jsonData[key]);
+                    contentDiv.appendChild(nestedTable);
+                    cell.appendChild(contentDiv);
+                    tableBody.appendChild(row);
+                } else {
+                    cell.textContent = `${key}: ${jsonData[key]}`;
+                    tableBody.appendChild(row);
+                }
+            }
+
+            var coll = document.getElementsByClassName("collapsible");
+            for (let i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.nextElementSibling.style.display = this.nextElementSibling.style.display === "block" ? "none" : "block";
+                    this.classList.toggle("active");
+                });
+            }
+        }
+
+        createTableRows();
+    </script>
+</body>
+</html>
+
