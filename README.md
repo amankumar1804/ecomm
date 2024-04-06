@@ -1626,6 +1626,43 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
     <title>CrowdStrike Falcon Report</title>
     <!-- Include Astro Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .collapsible {
+            background-color: #777;
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+        .collapsible:after {
+            content: '\002B';
+            color: white;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2212";
+        }
+
+        .content {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 p-8">
     <div class="container mx-auto">
@@ -1636,14 +1673,6 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
                     <!-- Table rows will be added dynamically here -->
                 </tbody>
             </table>
-        </div>
-    </div>
-
-    <div id="modal" class="hidden fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex items-center justify-center">
-        <div class="bg-white p-8 rounded-lg max-w-md">
-            <button id="modalCloseBtn" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">&times;</button>
-            <h2 class="text-lg font-semibold mb-4">Key-Value Pairs</h2>
-            <pre id="modalContent" class="overflow-auto max-h-96"></pre>
         </div>
     </div>
 
@@ -1691,35 +1720,40 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
             // Create table rows with keys and toggle buttons
             for (const key in jsonData) {
                 const row = document.createElement('tr');
+                const contentRow = document.createElement('tr');
                 row.innerHTML = `
                     <td class="px-4 py-2 border border-gray-300 text-left">${key}</td>
                     <td class="px-4 py-2 border border-gray-300 text-left">
-                        <button class="toggleBtn bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline">Toggle</button>
+                        <button class="collapsible bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline">Toggle</button>
                     </td>
                 `;
                 tableBody.appendChild(row);
+
+                const value = typeof jsonData[key] === 'object' ? JSON.stringify(jsonData[key], null, 2) : jsonData[key];
+                contentRow.innerHTML = `
+                    <td class="px-4 py-2 border border-gray-300 text-left" colspan="2">
+                        <div class="content hidden">
+                            <pre>${value}</pre>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(contentRow);
             }
 
             // Add click event listeners to toggle buttons
-            const toggleBtns = document.querySelectorAll('.toggleBtn');
-            toggleBtns.forEach(btn => {
-                btn.addEventListener('click', toggleJson);
+            const collapsibles = document.querySelectorAll('.collapsible');
+            collapsibles.forEach(collapsible => {
+                collapsible.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.parentElement.nextElementSibling.querySelector('.content');
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    }
+                });
             });
         }
-
-        // Function to toggle JSON value display
-        function toggleJson(event) {
-            const key = event.target.closest('tr').querySelector('td:first-child').textContent;
-            const value = jsonData[key];
-            const modalContent = document.getElementById('modalContent');
-            modalContent.textContent = JSON.stringify(value, null, 2);
-            document.getElementById('modal').classList.remove('hidden');
-        }
-
-        // Close modal when close button is clicked
-        document.getElementById('modalCloseBtn').addEventListener('click', () => {
-            document.getElementById('modal').classList.add('hidden');
-        });
 
         // Call the function to create table rows
         createTableRows();
