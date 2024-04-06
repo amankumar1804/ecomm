@@ -1765,6 +1765,7 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CrowdStrike Falcon Report</title>
+    <!-- Include Astro Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .collapsible {
@@ -1817,52 +1818,45 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
     </div>
 
     <script>
-        const jsonData = {/* JSON Data */};
+        const jsonData = {/* JSON Data as previously defined */};
 
         function createTableRows() {
             const tableBody = document.getElementById('reportTableBody');
 
-            for (const key in jsonData) {
+            Object.keys(jsonData).forEach((key) => {
                 const row = document.createElement('tr');
                 const cell = document.createElement('td');
-                cell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
+                cell.classList.add('border', 'border-gray-300', 'px-4', 'py-2');
 
                 if (typeof jsonData[key] === 'object') {
-                    const btn = document.createElement('button');
-                    btn.innerHTML = key;
-                    btn.classList.add('collapsible');
+                    const button = document.createElement('button');
+                    button.textContent = key;
+                    button.classList.add('collapsible');
                     const contentDiv = document.createElement('div');
                     contentDiv.classList.add('content');
                     const pre = document.createElement('pre');
                     pre.textContent = JSON.stringify(jsonData[key], null, 2);
                     contentDiv.appendChild(pre);
 
-                    cell.appendChild(btn);
-                    row.appendChild(cell);
-                    tableBody.appendChild(row);
-
-                    const newRow = document.createElement('tr');
-                    const newCell = document.createElement('td');
-                    newCell.appendChild(contentDiv);
-                    newRow.appendChild(newCell);
-                    tableBody.appendChild(newRow);
+                    cell.appendChild(button);
+                    cell.appendChild(contentDiv);
                 } else {
                     cell.textContent = `${key}: ${jsonData[key]}`;
-                    row.appendChild(cell);
-                    tableBody.appendChild(row);
                 }
-            }
-            
+                row.appendChild(cell);
+                tableBody.appendChild(row);
+            });
+
             var coll = document.getElementsByClassName("collapsible");
             for (let i = 0; i < coll.length; i++) {
                 coll[i].addEventListener("click", function() {
                     this.classList.toggle("active");
                     var content = this.nextElementSibling;
-                    if (content.style.maxHeight) {
+                    if (content.style.maxHeight){
                         content.style.maxHeight = null;
                     } else {
                         content.style.maxHeight = content.scrollHeight + "px";
-                    }
+                    } 
                 });
             }
         }
