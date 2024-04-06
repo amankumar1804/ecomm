@@ -1937,3 +1937,14 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
 </body>
 </html>
 
+#collapseButton {
+    background-color: blue; /* Standard blue */
+    color: white; /* White text color for better readability */
+    border: none; /* Removes the default border */
+    padding: 10px 20px; /* Adds some padding for visual appeal */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+}
+
+#collapseButton:hover {
+    background-color: darkblue; /* Darker blue on hover for visual feedback */
+}
