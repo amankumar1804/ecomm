@@ -1765,7 +1765,6 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CrowdStrike Falcon Report</title>
-    <!-- Include Astro Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .collapsible {
@@ -1798,7 +1797,7 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
 
         .content {
             padding: 0 18px;
-            max-height: 0;
+            display: none; /* Initially hide content */
             overflow: hidden;
             transition: max-height 0.2s ease-out;
             background-color: #f1f1f1;
@@ -1818,7 +1817,73 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
     </div>
 
     <script>
-        const jsonData = {/* JSON data as previously defined */};
+               const jsonData = {
+            "id": "573568b0dcee4fe3b747ccdfb9a26a84",
+            "customer_id": "9dab3dd4a8de4e46bc8988b5a8c88603",
+            "user_uuid": "6ff6787c-6f9a-4bf2-a229-6a553a0d009d",
+            "user_id": "sowrab.m@lseg.com",
+            "name": "WBMS CrowdStrike Sensor Report",
+            "description": "This report is for Org-WBMS",
+            "status": "ACTIVE",
+            "type": "hosts",
+            "schedule": {
+                "definition": "0 12 * * 4",
+                "display": "Weekly on Thursday at 12 PM (noon) UTC",
+                "can_stagger": false
+            },
+            "created_on": "2024-01-23T17:16:46.45037667Z",
+            "last_updated_on": "2024-02-29T12:00:44.0212124092",
+            "last_execution": {
+                "id": "060b3ce9d35245eea046f8138f386457",
+                "last_updated_on": "2024-02-29T12:00:44.021212409Z",
+                "execution_metadata": null,
+                "status": "DONE",
+                "status_display": "Success",
+                "status_msg": ""
+            },
+            "next_execution_on": "2024-03-07T12:00:00Z",
+            "start_on": "2024-01-24T00:00:007",
+            "report_metadata": {
+                "subtype": "",
+                "last_unscheduled_execution": {
+                    "id": "",
+                    "activity_status": "",
+                    "status_display": "",
+                    "last_updated_ts": null
+                },
+                "created_by_uuid": "",
+                "created_by_user_id": ""
+            },
+            "report_params": {
+                "filter": "tags: 'SensorGroupingTags/Org-WBMS'",
+                "filter_display": "tags: ' SensorGroupingTags/Org-WBMS'",
+                "filter_ui": "tags: 'SensorGroupingTags/Org-WBMS'",
+                "format": "csv",
+                "sort": "",
+                "dashboard_id": "",
+                "dashboard_visibility": ""
+            },
+            "notifications": [
+                {
+                    "type": "email",
+                    "config": {
+                        "recipients": ["sowrab.m@lseg.com", "sarah.metcalfe@lseg.com"],
+                        "plugin_id": "",
+                        "config_id": "",
+                        "cid": "",
+                        "severity": ""
+                    },
+                    "options": {
+                        "attach_report": "true"
+                    }
+                }
+            ],
+            "shared_with": [
+                "74d9565d-30e2-46e6-9480-ed14ac271727",
+                "6ff6787c-6f9a-4bf2-a229-6a553a0d009d"
+            ]
+        };
+
 
         function createTableRows() {
             const tableBody = document.getElementById('reportTableBody');
@@ -1834,22 +1899,17 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
                     const button = document.createElement('button');
                     button.textContent = key;
                     button.classList.add('collapsible');
+                    
                     const contentDiv = document.createElement('div');
                     contentDiv.classList.add('content');
                     const pre = document.createElement('pre');
                     pre.textContent = JSON.stringify(jsonData[key], null, 2);
                     contentDiv.appendChild(pre);
 
+                    // Place contentDiv directly after the button inside the cell
+                    button.appendChild(contentDiv);
                     cell.appendChild(button);
-                    row.appendChild(cell);
                     tableBody.appendChild(row);
-
-                    const contentRow = document.createElement('tr');
-                    const contentCell = document.createElement('td');
-                    contentCell.classList.add('border', 'border-gray-300', 'px-4', 'py-2', 'text-left', 'w-full');
-                    contentCell.appendChild(contentDiv);
-                    contentRow.appendChild(contentCell);
-                    tableBody.appendChild(contentRow);
                 } else {
                     cell.textContent = `${key}: ${jsonData[key]}`;
                     tableBody.appendChild(row);
@@ -1860,12 +1920,14 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
             for (let i = 0; i < coll.length; i++) {
                 coll[i].addEventListener("click", function() {
                     this.classList.toggle("active");
-                    var content = this.nextElementSibling.querySelector('.content');
-                    if (content.style.maxHeight){
-                        content.style.maxHeight = null;
-                    } else {
+                    var content = this.querySelector('.content');
+                    if (content.style.display === "none") {
+                        content.style.display = "block";
                         content.style.maxHeight = content.scrollHeight + "px";
-                    } 
+                    } else {
+                        content.style.display = "none";
+                        content.style.maxHeight = null;
+                    }
                 });
             }
         }
