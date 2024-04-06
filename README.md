@@ -1591,33 +1591,6 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
 </body>
 </html>
 
-
--=-=-=-=++++-=-=-=-=-=-=
-    function createTableRows() {
-        const tableBody = document.getElementById('reportTableBody');
-
-        // Create table row for keys and values
-        for (const key in jsonData) {
-            const keyCell = document.createElement('td');
-            const valueCell = document.createElement('td');
-            keyCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
-            valueCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
-            keyCell.textContent = key;
-            const value = typeof jsonData[key] === 'object' ? JSON.stringify(jsonData[key]) : jsonData[key];
-            valueCell.textContent = value;
-            const row = document.createElement('tr');
-            row.appendChild(keyCell);
-            row.appendChild(valueCell);
-            tableBody.appendChild(row);
-        }
-    }
-
-    // Call the function to create table rows
-    createTableRows();
-</script>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1760,3 +1733,142 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
     </script>
 </body>
 </html>
+-=-=-=-=++++-=-=-=-=-=-=
+    function createTableRows() {
+        const tableBody = document.getElementById('reportTableBody');
+
+        // Create table row for keys and values
+        for (const key in jsonData) {
+            const keyCell = document.createElement('td');
+            const valueCell = document.createElement('td');
+            keyCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
+            valueCell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
+            keyCell.textContent = key;
+            const value = typeof jsonData[key] === 'object' ? JSON.stringify(jsonData[key]) : jsonData[key];
+            valueCell.textContent = value;
+            const row = document.createElement('tr');
+            row.appendChild(keyCell);
+            row.appendChild(valueCell);
+            tableBody.appendChild(row);
+        }
+    }
+
+    // Call the function to create table rows
+    createTableRows();
+</script>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrowdStrike Falcon Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .collapsible {
+            background-color: #777;
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+        .collapsible:after {
+            content: '\002B';
+            color: white;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2212";
+        }
+
+        .content {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-center">CrowdStrike Falcon Report</h1>
+        <div class="overflow-x-auto">
+            <table class="table-auto border-collapse border border-gray-300 bg-white shadow-md rounded-lg">
+                <tbody id="reportTableBody">
+                    <!-- Table rows will be added dynamically here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const jsonData = {/* JSON Data */};
+
+        function createTableRows() {
+            const tableBody = document.getElementById('reportTableBody');
+
+            for (const key in jsonData) {
+                const row = document.createElement('tr');
+                const cell = document.createElement('td');
+                cell.classList.add('px-4', 'py-2', 'border', 'border-gray-300', 'text-left');
+
+                if (typeof jsonData[key] === 'object') {
+                    const btn = document.createElement('button');
+                    btn.innerHTML = key;
+                    btn.classList.add('collapsible');
+                    const contentDiv = document.createElement('div');
+                    contentDiv.classList.add('content');
+                    const pre = document.createElement('pre');
+                    pre.textContent = JSON.stringify(jsonData[key], null, 2);
+                    contentDiv.appendChild(pre);
+
+                    cell.appendChild(btn);
+                    row.appendChild(cell);
+                    tableBody.appendChild(row);
+
+                    const newRow = document.createElement('tr');
+                    const newCell = document.createElement('td');
+                    newCell.appendChild(contentDiv);
+                    newRow.appendChild(newCell);
+                    tableBody.appendChild(newRow);
+                } else {
+                    cell.textContent = `${key}: ${jsonData[key]}`;
+                    row.appendChild(cell);
+                    tableBody.appendChild(row);
+                }
+            }
+            
+            var coll = document.getElementsByClassName("collapsible");
+            for (let i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            }
+        }
+
+        createTableRows();
+    </script>
+</body>
+</html>
+
