@@ -1818,17 +1818,19 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
     </div>
 
     <script>
-        const jsonData = {/* JSON Data as previously defined */};
+        const jsonData = {/* JSON data as previously defined */};
 
         function createTableRows() {
             const tableBody = document.getElementById('reportTableBody');
+            const collapsibleKeys = ['schedule', 'last_execution', 'report_metadata', 'report_params', 'notifications', 'shared_with'];
 
-            Object.keys(jsonData).forEach((key) => {
+            for (const key in jsonData) {
                 const row = document.createElement('tr');
                 const cell = document.createElement('td');
-                cell.classList.add('border', 'border-gray-300', 'px-4', 'py-2');
+                cell.classList.add('border', 'border-gray-300', 'px-4', 'py-2', 'text-left', 'w-full');
+                row.appendChild(cell);
 
-                if (typeof jsonData[key] === 'object') {
+                if (collapsibleKeys.includes(key)) {
                     const button = document.createElement('button');
                     button.textContent = key;
                     button.classList.add('collapsible');
@@ -1839,19 +1841,26 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
                     contentDiv.appendChild(pre);
 
                     cell.appendChild(button);
-                    cell.appendChild(contentDiv);
+                    row.appendChild(cell);
+                    tableBody.appendChild(row);
+
+                    const contentRow = document.createElement('tr');
+                    const contentCell = document.createElement('td');
+                    contentCell.classList.add('border', 'border-gray-300', 'px-4', 'py-2', 'text-left', 'w-full');
+                    contentCell.appendChild(contentDiv);
+                    contentRow.appendChild(contentCell);
+                    tableBody.appendChild(contentRow);
                 } else {
                     cell.textContent = `${key}: ${jsonData[key]}`;
+                    tableBody.appendChild(row);
                 }
-                row.appendChild(cell);
-                tableBody.appendChild(row);
-            });
+            }
 
             var coll = document.getElementsByClassName("collapsible");
             for (let i = 0; i < coll.length; i++) {
                 coll[i].addEventListener("click", function() {
                     this.classList.toggle("active");
-                    var content = this.nextElementSibling;
+                    var content = this.nextElementSibling.querySelector('.content');
                     if (content.style.maxHeight){
                         content.style.maxHeight = null;
                     } else {
