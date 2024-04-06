@@ -2159,3 +2159,283 @@ buttoonn0909090-=-=-=--=-=-=-=1-1-1--1=1-=1-1
 </body>
 </html>
 
+
+
+-=-=-=-=-=-==+++_=-=-=-=-=-=-=+++++-=-=-==-=-=-=-==-=-=
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nested Table JSON Data Display</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .collapsible {
+            background-color: #777;
+            color: white;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+        .content {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #f1f1f1;
+            transition: max-height 0.2s ease-out;
+        }
+
+        .nested-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .nested-table, .nested-table th, .nested-table td {
+            border: 1px solid #ddd;
+        }
+
+        .nested-table th, .nested-table td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .nested-table th {
+            background-color: #f3f3f3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-center">JSON Data Display with Nested Tables</h1>
+        <table class="min-w-full table-auto border-collapse border border-gray-300">
+            <thead class="bg-gray-200"></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        const jsonData = [
+{
+            "id": "573568b0dcee4fe3b747ccdfb9a26a84",
+            "customer_id": "9dab3dd4a8de4e46bc8988b5a8c88603",
+            "user_uuid": "6ff6787c-6f9a-4bf2-a229-6a553a0d009d",
+            "user_id": "sowrab.m@lseg.com",
+            "name": "WBMS CrowdStrike Sensor Report",
+            "description": "This report is for Org-WBMS",
+            "status": "ACTIVE",
+            "type": "hosts",
+            "schedule": {
+                "definition": "0 12 * * 4",
+                "display": "Weekly on Thursday at 12 PM (noon) UTC",
+                "can_stagger": false
+            },
+            "created_on": "2024-01-23T17:16:46.45037667Z",
+            "last_updated_on": "2024-02-29T12:00:44.0212124092",
+            "last_execution": {
+                "id": "060b3ce9d35245eea046f8138f386457",
+                "last_updated_on": "2024-02-29T12:00:44.021212409Z",
+                "execution_metadata": null,
+                "status": "DONE",
+                "status_display": "Success",
+                "status_msg": ""
+            },
+            "next_execution_on": "2024-03-07T12:00:00Z",
+            "start_on": "2024-01-24T00:00:007",
+            "report_metadata": {
+                "subtype": "",
+                "last_unscheduled_execution": {
+                    "id": "",
+                    "activity_status": "",
+                    "status_display": "",
+                    "last_updated_ts": null
+                },
+                "created_by_uuid": "",
+                "created_by_user_id": ""
+            },
+            "report_params": {
+                "filter": "tags: 'SensorGroupingTags/Org-WBMS'",
+                "filter_display": "tags: ' SensorGroupingTags/Org-WBMS'",
+                "filter_ui": "tags: 'SensorGroupingTags/Org-WBMS'",
+                "format": "csv",
+                "sort": "",
+                "dashboard_id": "",
+                "dashboard_visibility": ""
+            },
+            "notifications": [
+                {
+                    "type": "email",
+                    "config": {
+                        "recipients": ["sowrab.m@lseg.com", "sarah.metcalfe@lseg.com"],
+                        "plugin_id": "",
+                        "config_id": "",
+                        "cid": "",
+                        "severity": ""
+                    },
+                    "options": {
+                        "attach_report": "true"
+                    }
+                }
+            ],
+            "shared_with": [
+                "74d9565d-30e2-46e6-9480-ed14ac271727",
+                "6ff6787c-6f9a-4bf2-a229-6a553a0d009d"
+            ]
+        },
+
+
+
+{
+            "id": "573568b0dcee4fe3b747ccdfb9a26a84",
+            "customer_id": "9dab3dd4a8de4e46bc8988b5a8c88603",
+            "user_uuid": "6ff6787c-6f9a-4bf2-a229-6a553a0d009d",
+            "user_id": "sowrab.m@lseg.com",
+            "name": "WBMS CrowdStrike Sensor Report",
+            "description": "This report is for Org-WBMS",
+            "status": "ACTIVE",
+            "type": "hosts",
+            "schedule": {
+                "definition": "0 12 * * 4",
+                "display": "Weekly on Thursday at 12 PM (noon) UTC",
+                "can_stagger": false
+            },
+            "created_on": "2024-01-23T17:16:46.45037667Z",
+            "last_updated_on": "2024-02-29T12:00:44.0212124092",
+            "last_execution": {
+                "id": "060b3ce9d35245eea046f8138f386457",
+                "last_updated_on": "2024-02-29T12:00:44.021212409Z",
+                "execution_metadata": null,
+                "status": "DONE",
+                "status_display": "Success",
+                "status_msg": ""
+            },
+            "next_execution_on": "2024-03-07T12:00:00Z",
+            "start_on": "2024-01-24T00:00:007",
+            "report_metadata": {
+                "subtype": "",
+                "last_unscheduled_execution": {
+                    "id": "",
+                    "activity_status": "",
+                    "status_display": "",
+                    "last_updated_ts": null
+                },
+                "created_by_uuid": "",
+                "created_by_user_id": ""
+            },
+            "report_params": {
+                "filter": "tags: 'SensorGroupingTags/Org-WBMS'",
+                "filter_display": "tags: ' SensorGroupingTags/Org-WBMS'",
+                "filter_ui": "tags: 'SensorGroupingTags/Org-WBMS'",
+                "format": "csv",
+                "sort": "",
+                "dashboard_id": "",
+                "dashboard_visibility": ""
+            },
+            "notifications": [
+                {
+                    "type": "email",
+                    "config": {
+                        "recipients": ["sowrab.m@lseg.com", "sarah.metcalfe@lseg.com"],
+                        "plugin_id": "",
+                        "config_id": "",
+                        "cid": "",
+                        "severity": ""
+                    },
+                    "options": {
+                        "attach_report": "true"
+                    }
+                }
+            ],
+            "shared_with": [
+                "74d9565d-30e2-46e6-9480-ed14ac271727",
+                "6ff6787c-6f9a-4bf2-a229-6a553a0d009d"
+            ]
+        }
+        ];
+
+        const toggleKeys = ['schedule', 'last_execution', 'report_metadata', 'report_params', 'notifications', 'shared_with'];
+        const tableHead = document.querySelector("table thead");
+        const tableBody = document.querySelector("table tbody");
+
+        // Create header row
+        const headerRow = document.createElement("tr");
+        Object.keys(jsonData[0]).forEach(key => {
+            const th = document.createElement("th");
+            th.textContent = key;
+            headerRow.appendChild(th);
+        });
+        tableHead.appendChild(headerRow);
+
+        // Create rows for JSON data
+        jsonData.forEach(obj => {
+            const row = document.createElement("tr");
+            Object.keys(obj).forEach(key => {
+                const cell = document.createElement("td");
+
+                if (toggleKeys.includes(key)) {
+                    const button = document.createElement("button");
+                    button.textContent = "Details";
+                    button.className = "collapsible";
+
+                    const contentDiv = document.createElement("div");
+                    contentDiv.className = "content";
+
+                    // Create a nested table for the collapsible content
+                    const nestedTable = document.createElement("table");
+                    nestedTable.className = "nested-table";
+
+                    const data = obj[key];
+                    if (typeof data === "object" && !Array.isArray(data)) {
+                        Object.entries(data).forEach(([k, v]) => {
+                            const row = nestedTable.insertRow();
+                            const keyCell = row.insertCell();
+                            keyCell.textContent = k;
+                            const valueCell = row.insertCell();
+                            valueCell.textContent = JSON.stringify(v, null, 2);
+                        });
+                    } else {
+                        // Handle arrays or other non-object data types
+                        const row = nestedTable.insertRow();
+                        const cell = row.insertCell();
+                        cell.textContent = JSON.stringify(data, null, 2);
+                        cell.colSpan = 2;
+                    }
+
+                    contentDiv.appendChild(nestedTable);
+                    button.addEventListener("click", function() {
+                        this.classList.toggle("active");
+                        const content = this.nextElementSibling;
+                        content.style.display = content.style.display === "block" ? "none" : "block";
+                    });
+
+                    cell.appendChild(button);
+                    cell.appendChild(contentDiv);
+                } else {
+                    cell.textContent = typeof obj[key] === "object" ? "Object" : obj[key];
+                }
+
+                row.appendChild(cell);
+            });
+            tableBody.appendChild(row);
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
