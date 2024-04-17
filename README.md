@@ -1,3 +1,60 @@
+
+import re
+
+def validate_indicator(indicator):
+    # Regex for validating an IPv4 address
+    ipv4_regex = r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
+    
+    # Regex for validating an IPv6 address
+    ipv6_regex = r'^([\da-fA-F]{1,4}:){7}([\da-fA-F]{1,4})$'
+
+    # Regex for validating a domain name
+    domain_regex = r'^(?:[a-zA-Z0-9-]{1,63}\.?)+(?:[a-zA-Z]{2,6})$'
+
+    # Regex for validating URLs
+    url_regex = r'^https?://(?:[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-zA-Z]{2,6})\b(?:[-a-zA-Z0-9@:%_\+.~#?&//=]*)$'
+
+    # Regex for common hash types (MD5, SHA1, SHA256)
+    hash_regex = r'\b([a-f0-9]{32}|[a-f0-9]{40}|[a-f0-9]{64})\b'
+
+    # Check if the indicator is an IPv4 address
+    if re.match(ipv4_regex, indicator):
+        return "IP address (IPv4)"
+    
+    # Check if the indicator is an IPv6 address
+    if re.match(ipv6_regex, indicator):
+        return "IP address (IPv6)"
+
+    # Check if the indicator is a valid domain
+    if re.match(domain_regex, indicator):
+        return "Domain"
+
+    # Check if the indicator is a valid URL
+    if re.match(url_regex, indicator):
+        return "URL"
+
+    # Check if the indicator is a valid hash
+    if re.match(hash_regex, indicator):
+        return "Hash"
+
+    return "Invalid"
+
+# Example usage
+indicators = [
+    "192.168.1.1",
+    "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+    "example.com",
+    "https://www.example.com/path?query=param",
+    "d41d8cd98f00b204e9800998ecf8427e",  # MD5 example
+    "not_a_valid_indicator"
+]
+
+for indicator in indicators:
+    result = validate_indicator(indicator)
+    print(f"The indicator '{indicator}' is a: {result}")
+
+
+
 ---
 import { getJSON } from 'fs'
 
